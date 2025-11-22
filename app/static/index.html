@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachable Machine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Teachable Machine</h1>
+        <div id="status-indicator" style="color: var(--text-secondary); font-size: 0.9rem;">System Ready</div>
+    </header>
+
+    <div class="container">
+        <!-- Left Panel: Data Collection -->
+        <div class="panel">
+            <div class="panel-header">Classes</div>
+            <div id="classes-list">
+                <!-- Class items will be injected here -->
+            </div>
+            <div style="margin-top: auto;">
+                <input type="text" id="new-class-name" placeholder="Enter class name...">
+                <button class="btn" style="width: 100%" onclick="addClass()">+ Add Class</button>
+            </div>
+        </div>
+
+        <!-- Center Panel: Training -->
+        <div class="panel">
+            <div class="panel-header">Training</div>
+
+            <div style="text-align: center; padding: 2rem 0;">
+                <button id="train-btn" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem;"
+                    onclick="startTraining()">Train Model</button>
+            </div>
+
+            <div id="training-status-container" style="display: none;">
+                <div class="progress-container">
+                    <div id="training-progress" class="progress-bar"></div>
+                </div>
+                <div id="training-message" <video id="inference-webcam" class="main-webcam" autoplay playsinline muted>
+                    </video>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <span>Live Prediction</span>
+                        <label class="switch">
+                            <input type="checkbox" id="live-predict-toggle" onchange="toggleLivePrediction()">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="prediction-bars" id="prediction-results" style="margin-top: 1rem;">
+                        <!-- Predictions injected here -->
+                        <div class="pred-item">
+                            <div class="pred-label">
+                                <span>Logistic Regression</span>
+                                <span id="pred-lr-val">--</span>
+                            </div>
+                        </div>
+                        <div class="pred-item">
+                            <div class="pred-label">
+                                <span>Random Forest</span>
+                                <span id="pred-rf-val">--</span>
+                            </div>
+                        </div>
+                        <div class="pred-item">
+                            <div class="pred-label">
+                                <span>CNN</span>
+                                <span id="pred-cnn-val">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="script.js"></script>
+</body>
+
+</html>

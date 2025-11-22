@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
+app/data/images/
+app/models/*.pkl
+app/models/*.h5
+app/models/*.json
+.vscode/
+.idea/
