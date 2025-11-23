@@ -135,11 +135,53 @@ async function captureAndUpload(className) {
             method: 'POST',
             body: formData
         });
-
-        // Optimistic count update could go here
     }, 'image/jpeg');
+}
+
+async function uploadFiles(className, input) {
+    const files = input.files;
+    if (!files || files.length === 0) return;
+
+    const countLabel = document.getElementById(`count-${className}`);
+    const originalText = countLabel.textContent;
+    countLabel.textContent = "Uploading...";
+    countLabel.style.color = "var(--primary)";
+
+    let uploadedCount = 0;
+    let totalFiles = files.length;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        // Skip non-image files
+        if (!file.type.startsWith('image/')) {
+            console.log(`Skipping non-image file: ${file.name}`);
+            continue;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            await fetch(`/upload/${className}`, {
+                method: 'POST',
+                body: formData
+            });
+            uploadedCount++;
+
+            // Update progress every 5 images
+            if (uploadedCount % 5 === 0 || uploadedCount === totalFiles) {
+                countLabel.textContent = `Uploaded ${uploadedCount}/${totalFiles}...`;
+            }
+        } catch (e) {
+            console.error("Upload failed for", file.name, e);
+        }
+    }
+
+    // Clear input and reload
     input.value = '';
-    loadClasses();
+    countLabel.textContent = "Refreshing...";
+    await loadClasses();
 }
 
 // Training Logic
