@@ -305,3 +305,35 @@ function updatePredictionUI(predictions) {
 
 // Start
 init();
+
+// Testing Function
+async function uploadTestImages(input) {
+    const files = input.files;
+    if (!files || files.length === 0) return;
+
+    const resultsDiv = document.getElementById('test-results');
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<div style="text-align: center; color: var(--text-secondary);">Testing images...</div>';
+
+    let html = '';
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const predictions = await res.json();
+
+            html += `<div style="background: rgba(255,255,255,0.05); padding: 1rem; margin-bottom: 0.5rem; border-radius: 0.5rem;"><div style="font-weight: 500; margin-bottom: 0.5rem;">${file.name}</div><div style="font-size: 0.85rem; color: var(--text-secondary);">LR: ${predictions.logistic_regression || '--'} | RF: ${predictions.random_forest || '--'} | CNN: ${predictions.cnn || '--'}</div></div>`;
+        } catch (e) {
+            console.error('Test failed for', file.name, e);
+        }
+    }
+
+    resultsDiv.innerHTML = html;
+    input.value = '';
+}
