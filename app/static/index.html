@@ -43,42 +43,83 @@
                 <div class="progress-container">
                     <div id="training-progress" class="progress-bar"></div>
                 </div>
-                <div id="training-message" <video id="inference-webcam" class="main-webcam" autoplay playsinline muted>
-                    </video>
+                <div id="training-message"
+                    style="text-align: center; margin-top: 0.5rem; color: var(--text-secondary);">Initializing...</div>
+            </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                        <span>Live Prediction</span>
-                        <label class="switch">
-                            <input type="checkbox" id="live-predict-toggle" onchange="toggleLivePrediction()">
-                            <span class="slider round"></span>
-                        </label>
+            <div id="results-container" style="display: none;">
+                <div class="panel-header" style="font-size: 1rem; margin-top: 1.5rem;">Results</div>
+
+                <div class="model-card">
+                    <div class="class-header">
+                        <span>Logistic Regression</span>
+                        <span class="metric-value" id="lr-acc">--%</span>
                     </div>
+                    <div id="lr-cm" class="confusion-matrix"
+                        style="display: none; margin-top: 1rem; font-size: 0.8rem; font-family: monospace; white-space: pre;">
+                    </div>
+                </div>
 
-                    <div class="prediction-bars" id="prediction-results" style="margin-top: 1rem;">
-                        <!-- Predictions injected here -->
-                        <div class="pred-item">
-                            <div class="pred-label">
-                                <span>Logistic Regression</span>
-                                <span id="pred-lr-val">--</span>
-                            </div>
-                        </div>
-                        <div class="pred-item">
-                            <div class="pred-label">
-                                <span>Random Forest</span>
-                                <span id="pred-rf-val">--</span>
-                            </div>
-                        </div>
-                        <div class="pred-item">
-                            <div class="pred-label">
-                                <span>CNN</span>
-                                <span id="pred-cnn-val">--</span>
-                            </div>
-                        </div>
+                <div class="model-card">
+                    <div class="class-header">
+                        <span>Random Forest</span>
+                        <span class="metric-value" id="rf-acc">--%</span>
+                    </div>
+                    <div id="rf-cm" class="confusion-matrix"
+                        style="display: none; margin-top: 1rem; font-size: 0.8rem; font-family: monospace; white-space: pre;">
+                    </div>
+                </div>
+
+                <div class="model-card">
+                    <div class="class-header">
+                        <span>CNN (TensorFlow)</span>
+                        <span class="metric-value" id="cnn-acc">--%</span>
+                    </div>
+                    <div id="cnn-cm" class="confusion-matrix"
+                        style="display: none; margin-top: 1rem; font-size: 0.8rem; font-family: monospace; white-space: pre;">
                     </div>
                 </div>
             </div>
+        </div>
 
-            <script src="script.js"></script>
+        <!-- Right Panel: Inference -->
+        <div class="panel">
+            <div class="panel-header">Preview</div>
+            <video id="inference-webcam" class="main-webcam" autoplay playsinline muted></video>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span>Live Prediction</span>
+                <label class="switch">
+                    <input type="checkbox" id="live-predict-toggle" onchange="toggleLivePrediction()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="prediction-bars" id="prediction-results" style="margin-top: 1rem;">
+                <!-- Predictions injected here -->
+                <div class="pred-item">
+                    <div class="pred-label">
+                        <span>Logistic Regression</span>
+                        <span id="pred-lr-val">--</span>
+                    </div>
+                </div>
+                <div class="pred-item">
+                    <div class="pred-label">
+                        <span>Random Forest</span>
+                        <span id="pred-rf-val">--</span>
+                    </div>
+                </div>
+                <div class="pred-item">
+                    <div class="pred-label">
+                        <span>CNN</span>
+                        <span id="pred-cnn-val">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

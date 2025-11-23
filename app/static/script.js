@@ -138,29 +138,6 @@ async function captureAndUpload(className) {
 
         // Optimistic count update could go here
     }, 'image/jpeg');
-}
-
-async function uploadFiles(className, input) {
-    const files = input.files;
-    if (!files || files.length === 0) return;
-
-    // Show loading state if needed
-
-    for (let i = 0; i < files.length; i++) {
-        const formData = new FormData();
-        formData.append('file', files[i]);
-
-        try {
-            await fetch(`/upload/${className}`, {
-                method: 'POST',
-                body: formData
-            });
-        } catch (e) {
-            console.error("Upload failed", e);
-        }
-    }
-
-    // Clear input and reload
     input.value = '';
     loadClasses();
 }
