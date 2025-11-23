@@ -1,67 +1,121 @@
-# Antigravity Teachable Machine
+# Teachable Machine - Python
 
-A web-based multi-class image classifier that allows users to train Machine Learning models directly from their browser using a webcam.
+A web-based machine learning application inspired by Google's Teachable Machine. Train image classification models directly in your browser using webcam or file uploads.
 
 ## Features
-- **Data Collection**: Capture images from your webcam for multiple custom classes.
-- **Multi-Model Training**: Trains three models simultaneously:
-  - Logistic Regression (Scikit-learn)
-  - Random Forest (Scikit-learn)
-  - CNN (TensorFlow/Keras)
-- **Live Training Progress**: Real-time feedback on training status.
-- **Evaluation Metrics**: View accuracy for each model.
-- **Real-time Inference**: Test models live with your webcam.
 
-## Architecture
+- 📸 **Webcam Integration**: Capture training images in real-time
+- 📁 **File/Folder Upload**: Upload images or entire folders
+- 🤖 **Multiple Models**: Train Logistic Regression, Random Forest, and CNN models
+- 📊 **Evaluation Metrics**: View accuracy and confusion matrices
+- 🔮 **Live Prediction**: Real-time predictions using your webcam
+- 🎨 **Modern UI**: Clean, responsive interface
 
-### Backend (`app/`)
-Built with **FastAPI**.
-- **`main.py`**: API endpoints for uploading data, triggering training, and running inference. Manages global training state.
-- **`trainers/`**: Contains logic for training different model types.
-  - `logistic_regression.py`: Flattens images, trains LR.
-  - `random_forest.py`: Flattens images, trains RF.
-  - `cnn.py`: Uses 2D images, trains a Convolutional Neural Network.
-- **`inference/`**: Handles loading saved models and generating predictions.
-- **`data/`**: Utilities for image processing (resizing, normalization).
+## Tech Stack
 
-### Frontend (`app/static/`)
-Built with **Vanilla HTML/CSS/JS**.
-- **`index.html`**: Main layout.
-- **`style.css`**: Premium dark-mode styling.
-- **`script.js`**: Handles webcam streams, API communication, and UI updates.
+- **Backend**: FastAPI
+- **ML Models**: Scikit-learn, TensorFlow/Keras
+- **Frontend**: Vanilla JavaScript, HTML, CSS
 
-## Installation
+## Local Setup
 
-1. **Prerequisites**: Python 3.8+
-2. **Install Dependencies**:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/AbdurrehmanArif/teachable-machine-python.git
+   cd teachable-machine-python
+   ```
+
+2. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-## Usage
-
-1. **Start the Server**:
+3. **Run the application**
    ```bash
    uvicorn app.main:app --reload
    ```
-2. **Open Web App**:
-   Navigate to `http://127.0.0.1:8000` in your browser.
 
-3. **Workflow**:
-   - **Add Classes**: Create at least 2 classes (e.g., "Rock", "Paper").
-   - **Capture Data**: Use "Hold to Record" to capture ~20-50 images per class.
-   - **Train**: Click "Train Model" and wait for completion.
-   - **Predict**: Use the "Preview" panel to see live predictions from all 3 models.
+4. **Open in browser**
+   ```
+   http://127.0.0.1:8000
+   ```
 
-## File Structure
+## Deployment
+
+### Option 1: Render (Recommended - Free)
+
+1. Go to [Render.com](https://render.com) and sign up with GitHub
+2. Click **"New +"** → **"Web Service"**
+3. Select this repository
+4. Configure:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Click **"Create Web Service"**
+
+### Option 2: Railway
+
+1. Go to [Railway.app](https://railway.app)
+2. Click **"Deploy from GitHub repo"**
+3. Select this repository
+4. Railway will auto-detect and deploy
+
+### Option 3: Heroku
+
+1. Install Heroku CLI
+2. Run:
+   ```bash
+   heroku create your-app-name
+   git push heroku main
+   ```
+
+## Usage
+
+1. **Create Classes**: Add class names (e.g., "Cat", "Dog")
+2. **Collect Data**: 
+   - Hold "Record" button to capture webcam images
+   - Or upload files/folders
+3. **Train Model**: Click "Train Model" button
+4. **View Results**: See accuracy and confusion matrix
+5. **Live Prediction**: Toggle "Live Prediction" to test your model
+
+## Project Structure
+
 ```
-d:/Task 3/
-  app/
-    data/          # Stored images
-    trainers/      # Training logic
-    models/        # Saved models (.pkl, .h5)
-    inference/     # Prediction logic
-    static/        # Frontend assets
-    main.py        # FastAPI app
-  requirements.txt
+teachable-machine-python/
+├── app/
+│   ├── data/           # Data utilities
+│   ├── trainers/       # ML model trainers
+│   ├── inference/      # Prediction logic
+│   ├── models/         # Saved models
+│   ├── static/         # Frontend files
+│   └── main.py         # FastAPI server
+├── requirements.txt
+├── Procfile           # For deployment
+└── run.bat            # Windows run script
 ```
+
+## Requirements
+
+- Python 3.8+
+- Webcam (for live capture)
+- Modern browser with webcam permissions
+
+## Notes
+
+- **Single Class Training**: Supported (uses DummyClassifier)
+- **Minimum Images**: At least 5 images per class recommended
+- **Model Storage**: Models saved in `app/models/`
+- **Data Storage**: Images saved in `app/data/images/`
+
+## License
+
+MIT License
+
+## Author
+
+**Abdurrehman Arif**
+- GitHub: [@AbdurrehmanArif](https://github.com/AbdurrehmanArif)
+
+---
+
+⚠️ **Important**: This is a FastAPI application, NOT a Streamlit app. Do not deploy on Streamlit Cloud.
